@@ -79,4 +79,26 @@ function university_query_adjustments($query) {
 
 add_action('pre_get_posts', 'university_query_adjustments');
 
+// Redirect subscriber accounts out of admin and onto front page
+add_action('admin_init', 'redirectSubsToFrontend');
+
+function redirectSubsToFrontend() {
+	$ourCurrentUser = wp_get_current_user();
+	
+	if(count($ourCurrentUser->roles) == 1 AND $ourCurrentUser->roles[0] == 'subscriber') {
+		wp_redirect(site_url('/'));
+		exit;
+	}
+}
+
+// Remove admin bar from subscriber roles
+add_action('wp_loaded', 'noSubsAdminBar');
+
+function noSubsAdminBar() {
+	$ourCurrentUser = wp_get_current_user();
+	
+	if(count($ourCurrentUser->roles) == 1 AND $ourCurrentUser->roles[0] == 'subscriber') {
+		show_admin_bar(false);
+	}
+}
 ?>
