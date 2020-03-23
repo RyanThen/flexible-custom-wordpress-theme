@@ -3,8 +3,6 @@
 function university_post_types() {
 	//Events Post Type
 	register_post_type('event', array(
-		'capability_type' => 'event',
-		'map_meta_cap' => true,
 		'supports' => array('title', 'editor', 'excerpt'),
 		'rewrite' => array('slug' => 'events'),
 		'has_archive' => true,
@@ -21,8 +19,6 @@ function university_post_types() {
 	
 	//Programs Post Type
 	register_post_type('catalog', array(
-		'capability_type' => 'catalog',
-		'map_meta_cap' => true,
 		'supports' => array('title', 'editor'),
 		'has_archive' => true,
 		'public' => true,
@@ -38,8 +34,6 @@ function university_post_types() {
 	
 	//Professors Post Type
 	register_post_type('professor', array(
-		'capability_type' => 'professor',
-		'map_meta_cap' => true,
 		'supports' => array('title', 'editor', 'thumbnail'),
 		'public' => true,
 		'labels' => array(
