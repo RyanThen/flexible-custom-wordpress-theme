@@ -1,5 +1,15 @@
 <?php
 
+// Customize Rest API
+function universityCustomRest() {
+	register_rest_field('post', 'authorName', array(
+		'get_callback' => function(){ return get_the_author(); }
+	));
+}
+
+add_action('rest_api_init', 'universityCustomRest');
+
+// Page Banner Function
 function pageBanner($args = NULL) {
 	
 	if (!$args['title']) {
@@ -14,10 +24,8 @@ function pageBanner($args = NULL) {
 		} else {
 			$args['image'] = get_theme_file_uri('images/ocean.jpg');
 		}
-	}
+	} ?>
 	
-	
-	?>
 	<div class="page-banner">
 		<div class="page-banner__bg-image" style="background-image: url(<?php echo $args['image']; ?>);"></div>
 		<div class="page-banner__content container container--narrow">
@@ -30,6 +38,7 @@ function pageBanner($args = NULL) {
 <?php
 }
 
+// Enqueue Files
 function fictional_university_files() {
 	wp_enqueue_style('font-awesome', 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 	wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
@@ -44,6 +53,7 @@ function fictional_university_files() {
 }
 add_action('wp_enqueue_scripts', 'fictional_university_files');
 
+// Theme Features
 function fu_theme_features(){
 	register_nav_menu('primary', 'Primary Navigation Menu');
 	register_nav_menu('footerOne', 'Footer Navigation 1');
@@ -59,6 +69,7 @@ function fu_theme_features(){
 
 add_action('after_setup_theme', 'fu_theme_features');
 
+// Adjust Default Queries
 function university_query_adjustments($query) {
 	if (!is_admin() AND is_post_type_archive() AND $query->is_main_query()) {
 		$today = date('Ymd');
